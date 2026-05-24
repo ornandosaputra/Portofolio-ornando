@@ -1,0 +1,2947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Modern Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root{
+
+  --primary:#9AE6FF;
+  --bg:#050505;
+  --text:#ffffff;
+  --muted:#7d8590;
+}
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:#070707;
+      color:white;
+      overflow-x:hidden;
+
+      cursor:default;
+
+      -webkit-font-smoothing:antialiased;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    img{
+      width:100%;
+      display:block;
+    }
+
+    section{
+      padding:
+        clamp(80px,10vw,120px)
+        10%;
+
+      background:#050505;
+      position:relative;
+      z-index:2;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:auto;
+    }
+
+    /* ========================================
+       BACKGROUND
+    ======================================== */
+
+    .bg-glow{
+      position:fixed;
+      width:500px;
+      height:500px;
+      border-radius:50%;
+      background:#9AE6FF;
+      filter:blur(170px);
+      opacity:0.08;
+      z-index:-1;
+    }
+
+    .bg-glow.one{
+      top:-100px;
+      left:-100px;
+    }
+
+    .bg-glow.two{
+      bottom:-200px;
+      right:-100px;
+    }
+
+    /* ========================================
+       HERO
+    ======================================== */
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+
+    .hero-content{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:80px;
+      align-items:center;
+
+      position:relative;
+z-index:2;
+    }
+/* =========================================
+   HERO TEXT
+========================================= */
+
+.hero-text{
+  position:relative;
+  z-index:5;
+}
+
+.hero-label{
+  display:inline-block;
+
+  margin-bottom:20px;
+
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:2px;
+
+  color:#8b8b8b;
+
+  text-transform:uppercase;
+}
+
+.hero-text h1{
+  font-size:clamp(42px,8vw,72px);
+  line-height:1.05;
+  font-weight:700;
+  letter-spacing:-3px;
+  text-wrap:balance;
+
+  max-width:700px;
+
+  margin-bottom:24px;
+
+  background:linear-gradient(
+  to right,
+  #ffffff,
+  #9ae6ff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero-text p{
+
+  max-width:620px;
+
+  font-size:18px;
+
+  line-height:1.8;
+
+  color:#b8c0cc;
+
+  margin-bottom:38px;
+}
+@media(max-width:768px){
+
+
+  .hero-text p{
+    max-width:540px;
+
+    font-size:clamp(15px,2vw,18px);
+  }
+
+}
+   
+
+    
+
+    
+
+    .hero-buttons{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:14px 28px;
+      border-radius:999px;
+      font-weight:600;
+      transition:0.3s;
+    }
+
+    .btn-primary{
+      background:#9AE6FF;
+      color:#050505;
+    }
+
+    .btn-primary:hover{
+
+      transform:
+        translateY(-4px);
+
+      box-shadow:
+        0 10px 30px rgba(154,230,255,0.35);
+    }
+
+    .btn-outline{
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.03);
+    }
+
+    .btn-outline:hover{
+      background:white;
+      color:black;
+    }
+
+    /* ========================================
+       HERO PHOTO
+    ======================================== */
+
+    .hero-photo-wrapper{
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .orbit{
+      position:absolute;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      border:1px dashed rgba(255,255,255,0.12);
+      animation:spin 20s linear infinite;
+    }
+
+    @keyframes spin{
+      from{
+        transform:rotate(0deg);
+      }
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
+    .photo-card{
+      width:320px;
+      height:420px;
+      border-radius:32px;
+      overflow:hidden;
+      position:relative;
+      z-index:2;
+
+      background:linear-gradient(
+        145deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.02)
+      );
+
+      border:1px solid rgba(255,255,255,0.1);
+
+      backdrop-filter:blur(20px);
+
+      box-shadow:
+        0 30px 60px rgba(0,0,0,0.45);
+    }
+
+    .photo-card img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  border-radius:inherit;
+
+  filter:
+    brightness(0.95)
+    contrast(1.05);
+
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+   .photo-card:hover img{
+
+  transform:scale(1.04);
+
+  filter:
+    brightness(1)
+    contrast(1.08);
+}
+
+    /* ========================================
+       FLOATING NAVIGATION
+    ======================================== */
+
+    .hero-nav a{
+  position:absolute;
+
+  width:80px;
+  height:80px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(255,255,255,0.05);
+
+  backdrop-filter:blur(18px);
+
+  border:1px solid rgba(255,255,255,0.1);
+
+  font-size:13px;
+  font-weight:600;
+
+  color:white;
+
+  overflow:hidden;
+
+  transition:
+    transform 0.45s cubic-bezier(.22,1,.36,1),
+    background 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    color 0.4s ease;
+
+  z-index:3;
+
+  animation:
+  floating 4s ease-in-out infinite;
+
+  width:72px;
+  height:72px;
+
+  font-size:13px;
+}
+
+ .hero-nav a:hover{
+
+  transform:
+    translateY(-8px)
+    scale(1.08);
+
+  background:
+    rgba(154,230,255,0.12);
+
+  border-color:
+    rgba(154,230,255,0.35);
+
+  color:#fff;
+
+  box-shadow:
+    0 0 30px rgba(154,230,255,0.18),
+    0 20px 40px rgba(0,0,0,0.35);
+}
+
+.hero-nav a:active{
+
+  will-change:transform;
+
+  transform:scale(0.95);
+
+  transition:0.12s;
+}
+
+    .nav-about{
+      top:-35px;
+      left:50%;
+      transform:translateX(-50%);
+    }
+
+    .nav-skill{
+      right:-40px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+
+    .nav-project{
+      bottom:-35px;
+      left:50%;
+      transform:translateX(-50%);
+    }
+
+    .nav-about{
+  animation-delay:0s;
+}
+
+.nav-skill{
+  animation-delay:1s;
+}
+
+.nav-project{
+  animation-delay:2s;
+}
+
+.nav-contact{
+  animation-delay:3s;
+
+  left:-40px;
+  top:50%;
+
+  transform:translateY(-50%);
+}
+    @keyframes floating{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+
+}
+
+    /* ========================================
+       SECTION TITLE
+    ======================================== */
+
+    .section-title{
+      font-size:clamp(34px,7vw,64px);
+
+      letter-spacing:-2px;
+
+      margin-bottom:8px;
+
+      text-align:center;
+    }
+
+    .section-title span{
+      color:#9AE6FF;
+    }
+    .section-description{
+
+  max-width:620px;
+
+  margin:
+    6px auto 0;
+
+  font-size:17px;
+
+  line-height:1.8;
+
+  text-align:center;
+
+  color:#7d8590;
+}
+
+
+    /* ========================================
+       FOOTER
+    ======================================== */
+
+    footer{
+      padding:40px 10%;
+      text-align:center;
+      color:#8f8f8f;
+      border-top:1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+
+    @media(max-width:980px){
+
+      .hero-content{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+
+      .hero-content{
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  gap:42px;
+}
+
+/* FOTO DI ATAS */
+
+.hero-photo-wrapper{
+
+  order:1;
+}
+
+/* TEXT DI BAWAH FOTO */
+
+.hero-text{
+
+  order:2;
+
+  text-align:center;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+}
+
+
+
+
+      
+
+      .hero-buttons{
+        justify-content:center;
+      }
+
+      
+    }
+
+    @media(max-width:600px){
+
+      .photo-card{
+
+        box-shadow:
+  0 0 60px rgba(154,230,255,0.08),
+  0 40px 80px rgba(0,0,0,0.45);
+
+       width:min(260px,74vw);
+
+       height:min(340px,96vw);
+}
+
+.hero{
+
+  padding-top:100px;
+
+  padding-bottom:60px;
+}
+.hero-text h1{
+
+  font-size:44px;
+
+  line-height:1.05;
+
+  margin-bottom:18px;
+}
+
+      .orbit{
+        width:320px;
+        height:320px;
+      }
+
+      .hero-nav a{
+        width:60px;
+        height:60px;
+        font-size:11px;
+      }
+
+      .nav-skill{
+        right:-15px;
+      }
+
+      .nav-contact{
+        left:-15px;
+      }
+
+      
+
+      
+    }
+/* =========================================
+   BLACK HOLE V2
+========================================= */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  background:#0b1020;
+}
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.blackhole-v2{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:0;
+}
+
+/* =========================================
+   SPACE LAYER
+========================================= */
+
+.space-layer{
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(120,119,255,0.18),
+      transparent 35%),
+
+    radial-gradient(circle at bottom right,
+      rgba(0,212,255,0.14),
+      transparent 35%),
+
+    #030303;
+}
+
+/* =========================================
+   BLACK HOLE AURA
+========================================= */
+
+.blackhole-aura{
+  position:absolute;
+
+  width:700px;
+  height:700px;
+
+  left:50%;
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(circle,
+      rgba(120,119,255,0.14),
+      rgba(0,212,255,0.08),
+      transparent 70%);
+
+  filter:blur(140px);
+
+animation:
+  auraPulse 10s ease-in-out infinite,
+  auraRotate 40s linear infinite;
+}
+
+/* =========================================
+   MAIN RING
+========================================= */
+
+.blackhole-ring{
+  position:absolute;
+
+  width:420px;
+  height:420px;
+
+  left:50%;
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  border-radius:50%;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 0 80px rgba(120,119,255,0.12),
+    inset 0 0 60px rgba(255,255,255,0.03);
+
+  animation:ringRotate 24s linear infinite;
+}
+
+/* =========================================
+   BLACK HOLE CORE
+========================================= */
+
+.blackhole-core{
+  position:absolute;
+
+  width:240px;
+  height:240px;
+
+  left:50%;
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(circle,
+      #000 35%,
+      #050505 70%,
+      transparent 100%);
+
+  box-shadow:
+    0 0 100px rgba(0,0,0,0.95);
+}
+
+/* =========================================
+   ENERGY RINGS
+========================================= */
+
+.energy-ring{
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  border-radius:50%;
+
+  border:
+    1px solid rgba(255,255,255,0.04);
+}
+
+.energy-ring-1{
+  width:520px;
+  height:520px;
+
+  animation:energyPulse 8s ease-out infinite;
+}
+
+.energy-ring-2{
+  width:620px;
+  height:620px;
+
+  animation:energyPulse 8s ease-out infinite;
+  animation-delay:4s;
+}
+
+/* =========================================
+   PARTICLES
+========================================= */
+
+.space-particles{
+  position:absolute;
+  inset:0;
+
+  background-image:
+    radial-gradient(2px 2px at 20px 30px,#fff,transparent),
+    radial-gradient(2px 2px at 200px 120px,#fff,transparent),
+    radial-gradient(1px 1px at 340px 80px,#fff,transparent);
+
+  background-size:500px 500px;
+
+  opacity:0.22;
+  filter:blur(1px);
+
+  animation:particleMove 120s linear infinite;
+}
+
+/* =========================================
+   NOISE
+========================================= */
+
+.space-noise{
+  position:absolute;
+  inset:0;
+
+  background-image:
+    radial-gradient(
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px
+    );
+
+  background-size:120px 120px;
+
+  opacity:0.03;
+
+  mix-blend-mode:soft-light;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes ringRotate{
+
+  from{
+    transform:
+      translate(-50%,-50%)
+      rotate(0deg);
+  }
+
+  to{
+    transform:
+      translate(-50%,-50%)
+      rotate(360deg);
+  }
+
+}
+
+@keyframes auraPulse{
+
+  0%{
+    opacity:0.7;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+
+  50%{
+    opacity:1;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1.05);
+  }
+
+  100%{
+    opacity:0.7;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+
+}
+
+@keyframes auraRotate{
+
+  from{
+    transform:
+      translate(-50%,-50%)
+      rotate(0deg);
+  }
+
+  to{
+    transform:
+      translate(-50%,-50%)
+      rotate(360deg);
+  }
+
+}
+
+@keyframes energyPulse{
+
+  0%{
+    opacity:0.25;
+
+    transform:
+      translate(-50%,-50%)
+      scale(0.9);
+  }
+
+  100%{
+    opacity:0;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1.2);
+  }
+
+}
+
+@keyframes particleMove{
+
+  from{
+    transform:translateY(0px);
+  }
+
+  to{
+    transform:translateY(-1000px);
+  }
+
+}
+/* =========================================
+   AMBIENT LIGHT
+========================================= */
+
+.ambient-light{
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(154,230,255,0.08),
+      transparent 45%
+    ),
+
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(124,119,255,0.08),
+      transparent 40%
+    );
+
+  animation:ambientMove 12s ease-in-out infinite alternate;
+
+  mix-blend-mode:screen;
+}
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes ambientMove{
+
+  from{
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+
+  to{
+    transform:
+      translateY(-20px)
+      scale(1.05);
+  }
+
+}
+/* =========================================
+   HERO FADE TRANSITION
+========================================= */
+
+.hero-fade{
+  position:absolute;
+
+  left:0;
+  bottom:0;
+
+  width:100%;
+  height:320px;
+
+  pointer-events:none;
+
+  z-index:3;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(3,3,3,0) 0%,
+      rgba(3,3,3,0.45) 40%,
+      rgba(3,3,3,0.55) 70%,
+      #050505 100%
+    );
+}
+/* =========================================
+   ABOUT LAYOUT
+========================================= */
+
+.about-layout{
+
+  display:grid;
+
+  grid-template-columns:
+    1.1fr 0.9fr;
+
+  gap:100px;
+
+  align-items:start;
+}
+
+/* =========================================
+   LEFT
+========================================= */
+
+.section-label{
+
+  display:inline-block;
+
+  margin-bottom:20px;
+
+  font-size:13px;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  color:#9AE6FF;
+}
+
+.about-left h2{
+
+  font-size:56px;
+
+  line-height:1.1;
+
+  margin-bottom:30px;
+
+  color:#fff;
+
+  letter-spacing:-2px;
+}
+
+.about-left p{
+
+  margin-bottom:24px;
+
+  font-size:18px;
+
+  line-height:1.9;
+
+  color:#a1a1aa;
+}
+
+/* =========================================
+   RIGHT
+========================================= */
+
+.about-right{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:60px;
+}
+
+.about-tag{
+
+  display:inline-block;
+
+  margin-bottom:28px;
+
+  font-size:12px;
+
+  font-weight:600;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  color:#9AE6FF;
+}
+
+/* =========================================
+   TIMELINE
+========================================= */
+
+.timeline-item{
+
+  position:relative;
+
+  padding-left:28px;
+
+  margin-bottom:40px;
+
+  border-left:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.timeline-item::before{
+
+  content:"";
+
+  position:absolute;
+
+  left:-5px;
+  top:8px;
+
+  width:10px;
+  height:10px;
+
+  border-radius:50%;
+
+  background:#9AE6FF;
+
+  box-shadow:
+    0 0 15px rgba(154,230,255,0.4);
+}
+
+.timeline-item h3{
+
+  font-size:22px;
+
+  margin-bottom:10px;
+
+  color:#fff;
+}
+
+.timeline-year{
+
+  margin-bottom:14px;
+
+  font-size:14px;
+
+  color:#9AE6FF;
+}
+
+.timeline-item p{
+
+  color:#a1a1aa;
+
+  line-height:1.8;
+}
+@media(max-width:900px){
+
+  .about-layout{
+
+    grid-template-columns:1fr;
+
+    gap:70px;
+  }
+
+  .about-left h2{
+    font-size:42px;
+  }
+
+}
+/* =========================================
+   SKILLS GRID
+========================================= */
+
+.skills-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+  gap:28px;
+
+  margin-top:60px;
+}
+
+/* =========================================
+   SKILL CARD
+========================================= */
+
+.skill-card{
+
+  min-height:220px;
+
+  position:relative;
+
+  padding:38px 30px;
+
+  border-radius:24px;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  background:
+    rgba(255,255,255,0.03);
+
+  backdrop-filter:blur(14px);
+
+  transition:
+    0.45s cubic-bezier(.22,1,.36,1);
+
+  overflow:hidden;
+}
+
+/* =========================================
+   HOVER
+========================================= */
+
+.skill-card:hover{
+
+  transform:
+    translateY(-10px)
+    scale(1.03);
+
+  border-color:
+    rgba(154,230,255,0.22);
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.35),
+    0 0 40px rgba(154,230,255,0.08);
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.skill-icon{
+
+  width:64px;
+  height:64px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  margin-bottom:24px;
+
+  border-radius:18px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  font-size:34px;
+
+  color:#9AE6FF;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+/* =========================================
+   TITLE
+========================================= */
+
+.skill-card h3{
+
+  margin-bottom:10px;
+
+  font-size:22px;
+
+  color:#fff;
+}
+
+/* =========================================
+   SUBTITLE
+========================================= */
+
+.skill-type{
+
+  display:block;
+
+  font-size:14px;
+
+  letter-spacing:1px;
+
+  color:#7d8590;
+}
+/* =========================================
+   CONTACT
+========================================= */
+
+.contact-layout{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:80px;
+
+  align-items:center;
+
+  margin-top:80px;
+}
+
+/* =========================================
+   LEFT
+========================================= */
+
+.contact-left h2{
+
+  font-size:clamp(38px,7vw,64px);
+
+  line-height:1.05;
+
+  letter-spacing:-3px;
+
+  margin:
+    18px 0 28px;
+
+  color:#fff;
+}
+
+.contact-left p{
+
+  max-width:520px;
+
+  line-height:1.9;
+
+  font-size:18px;
+
+  color:#a1a1aa;
+}
+
+/* =========================================
+   RIGHT
+========================================= */
+
+.contact-right{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:22px;
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.contact-card{
+
+  width:100%;
+
+  max-width:100%;
+
+  overflow:hidden;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:22px;
+
+  padding:26px 28px;
+
+  border-radius:24px;
+
+  text-decoration:none;
+
+  background:
+    rgba(255,255,255,0.03);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter:blur(14px);
+
+  transition:
+    0.45s cubic-bezier(.22,1,.36,1);
+}
+
+/* =========================================
+   HOVER
+========================================= */
+
+.contact-card:hover{
+
+  transform:
+    translateY(-4px);
+
+
+  border-color:
+    rgba(154,230,255,0.22);
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.35),
+    0 0 40px rgba(154,230,255,0.08);
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.contact-icon{
+
+  width:62px;
+  height:62px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border-radius:18px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  color:#9AE6FF;
+
+  font-size:24px;
+}
+
+/* =========================================
+   TEXT
+========================================= */
+
+.contact-card h3{
+
+  margin-bottom:6px;
+
+  font-size:20px;
+
+  color:#fff;
+}
+
+.contact-card span{
+
+  word-break:break-word;
+
+  color:#7d8590;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px){
+
+  .contact-layout{
+
+    grid-template-columns:1fr;
+
+    gap:60px;
+  }
+
+  .contact-left h2{
+
+    font-size:48px;
+  }
+
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer{
+
+  position:relative;
+
+  padding:30px 0;
+
+  border-top:
+    1px solid rgba(255,255,255,0.06);
+
+  background:#050505;
+}
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.footer-container{
+
+  max-width:1100px;
+
+  margin:auto;
+
+  padding:
+    0 40px;
+}
+
+/* =========================================
+   TOP
+========================================= */
+
+.footer-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:40px;
+
+  margin-bottom:16px;
+}
+
+/* =========================================
+   BRAND
+========================================= */
+
+.footer-brand h2{
+
+  font-size:30px;
+
+  margin-bottom:8px;
+
+  letter-spacing:-1px;
+
+  color:#fff;
+}
+
+.footer-brand h2 span{
+
+  color:#9AE6FF;
+}
+
+.footer-brand p{
+
+  font-size:14px;
+
+  color:#6b7280;
+
+  line-height:1.6;
+
+  max-width:380px;
+}
+
+/* =========================================
+   SOCIAL
+========================================= */
+
+.footer-social{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:28px;
+
+  flex-wrap:wrap;
+}
+
+.footer-social a{
+
+  position:relative;
+
+  width:fit-content;
+
+  text-decoration:none;
+
+  color:#d1d5db;
+
+  transition:0.35s ease;
+}
+
+.footer-social a:hover{
+
+  color:#9AE6FF;
+
+  transform:
+    translateX(4px);
+
+  opacity:1;
+}
+
+/* =========================================
+   LINE
+========================================= */
+
+.footer-line{
+
+  width:100%;
+
+  height:1px;
+
+  margin-bottom:16px;
+
+  background:
+    rgba(255,255,255,0.06);
+}
+
+/* =========================================
+   BOTTOM
+========================================= */
+
+.footer-bottom{
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+}
+
+.footer-bottom p{
+
+  color:#6b7280;
+
+  font-size:14px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px){
+
+  .footer-top{
+
+    flex-direction:column;
+  }
+
+  .footer-brand h2{
+
+    font-size:34px;
+  }
+
+}
+@media(max-width:768px){
+
+  .hero-nav a{
+
+    width:58px;
+    height:58px;
+
+    font-size:11px;
+  }
+
+}
+/* =========================================
+   CONTACT SECTION SPACING
+========================================= */
+
+.contact-section{
+
+  padding-bottom:40px;
+}
+/* =========================================
+   HERO CONTENT ABOVE BACKGROUND
+========================================= */
+
+.hero-content{
+  position:relative;
+  z-index:5;
+}
+
+/* =========================================
+   PROJECTS
+========================================= */
+
+.projects-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(300px,1fr));
+
+  gap:32px;
+
+  margin-top:70px;
+}
+
+/* =========================================
+   PROJECT CARD
+========================================= */
+
+.project-card{
+
+  cursor:pointer;
+
+  position:relative;
+
+  border-radius:32px;
+
+  overflow:hidden;
+
+  background:
+    rgba(255,255,255,0.03);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter:blur(16px);
+
+  transition:
+    0.5s cubic-bezier(.22,1,.36,1);
+
+  display:flex;
+
+  flex-direction:column;
+}
+
+/* =========================================
+   HOVER
+========================================= */
+
+.project-card:hover{
+
+  transform:
+    translateY(-12px);
+
+  border-color:
+    rgba(154,230,255,0.22);
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.45),
+    0 0 40px rgba(154,230,255,0.08);
+}
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.project-image{
+
+  height:240px;
+
+  overflow:hidden;
+
+  position:relative;
+}
+
+.project-image img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  transition:
+    transform 0.7s ease,
+    filter 0.7s ease;
+
+  filter:
+    brightness(0.92)
+    contrast(1.05);
+}
+
+/* =========================================
+   PROJECT IMAGE HOVER
+========================================= */
+
+.project-card:hover img{
+
+  transform:scale(1.06);
+
+  filter:
+    brightness(1)
+    contrast(1.08);
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.project-content{
+
+  padding:32px;
+}
+
+.project-tag{
+
+  display:inline-block;
+
+  margin-bottom:18px;
+
+  font-size:12px;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  color:#9AE6FF;
+}
+
+.project-content h3{
+
+  margin-bottom:18px;
+
+  font-size:30px;
+
+  letter-spacing:-1px;
+
+  color:#fff;
+}
+
+.project-content p{
+
+  line-height:1.8;
+
+  color:#a1a1aa;
+
+  margin-bottom:28px;
+}
+
+/* =========================================
+   TECH STACK
+========================================= */
+
+.project-tech{
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:12px;
+
+  margin-bottom:32px;
+}
+
+.project-tech span{
+
+  padding:10px 16px;
+
+  border-radius:999px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  font-size:13px;
+
+  color:#d1d5db;
+}
+
+/* =========================================
+   LINK
+========================================= */
+
+.project-link{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  font-weight:600;
+
+  color:#9AE6FF;
+}
+
+@media(max-width:768px){
+
+  .skills-grid{
+
+    grid-template-columns:1fr;
+  }
+
+}
+@media(max-width:768px){
+
+  .project-content{
+
+    padding:24px;
+  }
+
+  .project-content h3{
+
+    font-size:24px;
+  }
+
+}
+/* =========================================
+   ACCESSIBILITY FOCUS
+========================================= */
+
+a:focus-visible,
+button:focus-visible{
+
+  outline:
+    2px solid var(--primary);
+
+  outline-offset:4px;
+
+  border-radius:12px;
+}
+/* =========================================
+   SMOOTH SECTION REVEAL
+========================================= */
+
+.reveal{
+
+  opacity:0;
+
+  transform:
+    translateY(80px);
+
+  transition:
+  opacity 1.2s cubic-bezier(.22,1,.36,1),
+  transform 1.2s cubic-bezier(.22,1,.36,1);
+
+  will-change:
+    opacity,
+    transform;
+}
+
+/* =========================================
+   ACTIVE REVEAL
+========================================= */
+
+.reveal.active{
+
+  opacity:1;
+
+  transform:
+    translateY(0);
+}
+@media(max-width:600px){
+
+  .contact-layout{
+
+    gap:40px;
+  }
+
+  .contact-card{
+
+    transition:
+    transform 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+
+    padding:20px;
+
+    gap:16px;
+
+    border-radius:20px;
+  }
+
+  .contact-icon{
+
+    width:54px;
+    height:54px;
+
+    font-size:20px;
+
+    flex-shrink:0;
+  }
+
+  .contact-card h3{
+
+    font-size:18px;
+  }
+
+  .contact-card span{
+
+    font-size:15px;
+
+    line-height:1.5;
+  }
+
+}
+/* =========================================
+   ACTIVE ORBIT NAVIGATION
+========================================= */
+
+.hero-nav a.active-nav{
+
+  background:
+    rgba(154,230,255,0.18);
+
+  border-color:
+    rgba(154,230,255,0.45);
+
+  color:#fff;
+
+  transform:
+    scale(1.12);
+
+  box-shadow:
+    0 0 30px rgba(154,230,255,0.28),
+    0 0 80px rgba(154,230,255,0.12);
+}
+/* =========================================
+   LOADING SCREEN
+========================================= */
+
+.loader{
+
+  position:fixed;
+
+  inset:0;
+
+  width:100%;
+  height:100vh;
+
+  background:#050505;
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  z-index:99999;
+
+  overflow:hidden;
+
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
+}
+
+/* =========================================
+   HIDE LOADER
+========================================= */
+
+.loader.hidden{
+
+  opacity:0;
+
+  visibility:hidden;
+}
+
+/* =========================================
+   LOADER CONTENT
+========================================= */
+
+.loader-content{
+
+  text-align:center;
+}
+
+/* =========================================
+   TITLE
+========================================= */
+
+.loader-content h1{
+
+  font-size:clamp(42px,8vw,88px);
+
+  letter-spacing:-3px;
+
+  margin-bottom:14px;
+
+  color:#fff;
+
+  animation:
+    loaderGlow 2.5s ease-in-out infinite;
+}
+
+.loader-content h1 span{
+
+  color:#9AE6FF;
+}
+
+/* =========================================
+   TEXT
+========================================= */
+
+.loader-content p{
+
+  color:#7d8590;
+
+  font-size:16px;
+
+  letter-spacing:1px;
+}
+
+/* =========================================
+   GLOW ANIMATION
+========================================= */
+
+@keyframes loaderGlow{
+
+  0%{
+    opacity:0.7;
+    transform:scale(0.98);
+  }
+
+  50%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  100%{
+    opacity:0.7;
+    transform:scale(0.98);
+  }
+
+}
+/* =========================================
+   PROJECT OVERLAY
+========================================= */
+
+.project-image::after{
+
+  content:'';
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,0.35),
+      transparent
+    );
+
+  pointer-events:none;
+}
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================
+     LOADING SCREEN
+========================================= -->
+
+<div class="loader">
+
+  <div class="loader-content">
+
+    <h1>
+      ORNANDO<span>.</span>
+    </h1>
+
+    <p>
+      Building immersive experiences...
+    </p>
+
+  </div>
+
+</div>
+
+  <div class="bg-glow one"></div>
+  <div class="bg-glow two"></div>
+
+  <!-- ========================================
+       HERO
+  ========================================= -->
+
+  <section class="hero">
+
+<!-- BLACK HOLE V2 -->
+
+<div class="blackhole-v2">
+
+  <div class="space-layer"></div>
+
+  <div class="blackhole-aura"></div>
+
+  <div class="blackhole-ring"></div>
+
+  <div class="blackhole-core"></div>
+
+  <div class="energy-ring energy-ring-1"></div>
+  <div class="energy-ring energy-ring-2"></div>
+
+  <div class="space-particles"></div>
+
+  <div class="space-noise"></div>
+
+  <div class="ambient-light"></div>
+
+</div>
+
+
+    <div class="container hero-content">
+
+       <div class="hero-text">
+
+      <!-- LEFT -->
+
+    
+
+         <span class="hero-label">
+    MAHASISWA UNIVERSITAS KOMPUTAMA
+  </span>
+
+        <h1>
+          ORNANDO SAPUTRA BRILLIANTO
+        </h1>
+
+        <p>
+          Mahasiswa semester 2 di Universitas Komputama, Cilacap — berdedikasi untuk memahami bagaimana teknologi dapat mengoptimalkan operasional bisnis.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">
+            View Projects
+          </a>
+
+          <a href="#contact" class="btn btn-outline">
+            Contact Me
+          </a>
+        </div>
+
+      
+
+       </div>
+       
+
+
+      <!-- RIGHT -->
+
+      <div class="hero-photo-wrapper">
+
+        <div class="orbit"></div>
+
+        <!-- FLOAT NAV -->
+
+        <div class="hero-nav">
+
+          <a
+           href="#about"
+           class="nav-about"
+           data-section="about"
+          >
+           About
+         </a>
+
+          <a href="#skills" 
+          class="nav-skill"
+          data-section="skills"
+          >
+            Skills
+          </a>
+
+          <a href="#projects" 
+          class="nav-project" data-section="projects"
+          >
+            Projects
+          </a>
+
+          <a href="#contact" 
+          class="nav-contact"
+          data-section="contact"
+          >
+            Contact
+          </a>
+
+        </div>
+
+        <!-- PHOTO -->
+
+        <div class="photo-card">
+
+          <img
+            src="photo.webp"
+            alt="ornando"
+            loading="lazy"
+
+          >
+
+        </div>
+
+      </div>
+
+    </div>
+
+<div class="hero-fade"></div>
+
+  </section>
+
+  <!-- ========================================
+       ABOUT
+  ========================================= -->
+
+  <section id="about" class="reveal">
+
+    <div class="container">
+
+      <div class="about-layout">
+
+  <!-- LEFT -->
+
+  <div class="about-left">
+
+    <span class="section-label">
+      ABOUT ME
+    </span>
+
+    <h2>
+      Passionate about building
+      modern digital experiences.
+    </h2>
+
+    <p>
+      Hi, saya Ornando — seorang mahasiswa jurusan sistem informasi di Universitas Komputama yang berdedikasi untuk memahami bagaimana teknologi dapat mengoptimalkan operasional bisnis.
+    </p>
+
+    <p>
+      Saya senang belajar hal baru, membangun proyek dari nol, dan bereksperimen dengan berbagai tools desain dan pemrograman. Saat ini saya aktif mengerjakan proyek UI/UX dengan Figma dan belajar development dengan C++.
+    </p>
+
+  </div>
+
+  <!-- RIGHT -->
+
+  <div class="about-right">
+
+    <!-- EXPERIENCE -->
+
+    <div class="about-block">
+
+      <span class="about-tag">
+        EXPERIENCE
+      </span>
+
+      <div class="timeline-item">
+
+        <h3>
+          UI/UX Designer • MySehat App
+        </h3>
+
+        <p class="timeline-year">
+          2026 
+        </p>
+
+        <p>
+          Merancang aplikasi konsultasi kesehatan
+    mobile menggunakan Figma dengan fokus
+    pada clean healthcare interface dan
+    user-friendly experience.
+        </p>
+
+      </div>
+
+      <div class="timeline-item">
+
+        <h3>
+          Frontend Developer • Cashier Website
+        </h3>
+
+        <p class="timeline-year">
+          2026
+        </p>
+
+        <p>
+          Membangun website kasir modern dengan
+    tampilan responsive dan sistem transaksi
+    sederhana untuk kebutuhan digitalisasi
+    usaha kecil..
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- EDUCATION -->
+
+    <div class="about-block">
+
+      <span class="about-tag">
+        EDUCATION
+      </span>
+
+      <div class="timeline-item">
+
+        <h3>
+          Universitas Komputama
+        </h3>
+
+        <p class="timeline-year">
+          Sistem Informasi
+        </p>
+
+        <p>
+          Fokus mempelajari pengembangan
+      sistem, teknologi web,
+      UI/UX, dan problem solving
+      dalam dunia digital.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================
+       SKILLS
+  ========================================= -->
+
+  <section id="skills" class="reveal">
+
+    <div class="container">
+
+     <h2 class="section-title">
+  My <span>Tech Stack</span>
+</h2>
+
+<p class="section-description">
+  Teknologi dan tools yang saya gunakan
+  dalam belajar dan membangun proyek.
+</p>
+
+     <div class="skills-grid">
+
+  <!-- HTML -->
+
+  <div class="skill-card">
+
+    <div class="skill-icon">
+      <i class="fab fa-html5"></i>
+    </div>
+
+    <h3>HTML5</h3>
+
+    <span class="skill-type">
+      Markup Language
+    </span>
+
+  </div>
+
+  <!-- CSS -->
+
+  <div class="skill-card">
+
+    <div class="skill-icon">
+      <i class="fab fa-css3-alt"></i>
+    </div>
+
+    <h3>CSS3</h3>
+
+    <span class="skill-type">
+      Styling
+    </span>
+
+  </div>
+
+  <!-- JAVASCRIPT -->
+
+  <div class="skill-card">
+
+    <div class="skill-icon">
+      <i class="fab fa-js"></i>
+    </div>
+
+    <h3>JavaScript</h3>
+
+    <span class="skill-type">
+      Interactive Logic
+    </span>
+
+  </div>
+
+  <!-- GITHUB -->
+
+  <div class="skill-card">
+
+    <div class="skill-icon">
+      <i class="fab fa-github"></i>
+    </div>
+
+    <h3>GitHub</h3>
+
+    <span class="skill-type">
+      Version Control
+    </span>
+
+  </div>
+
+<!-- FIGMA -->
+
+<div class="skill-card">
+
+  <div class="skill-icon">
+    <i class="fab fa-figma"></i>
+  </div>
+
+  <h3>Figma</h3>
+
+  <span class="skill-type">
+    UI / UX Design
+  </span>
+
+</div>
+</div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================
+       PROJECTS
+  ========================================= -->
+
+  <section id="projects" class="reveal">
+
+    <div class="container">
+
+      <h2 class="section-title">
+        Featured <span>Projects</span>
+      </h2>
+
+      <p class="section-description">
+  Beberapa proyek yang saya desain dan kembangkan
+  selama proses belajar dan eksplorasi teknologi.
+</p>
+
+<div class="projects-grid">
+
+  <!-- PROJECT 1 -->
+
+  <a
+    href="https://www.figma.com/design/EAc7nml6ADgKi97v5r5HRP/Aplikasi-Konsultasi-Kesehatan-Mobile-MySehat--Community-?node-id=0-1&t=q8WH1hUzrGC5CCDo-1"
+    target="_blank"
+    class="project-card"
+  >
+
+    <div class="project-image">
+
+      <img
+        src="mysehat.webp"
+        alt="MySehat"
+      >
+
+    </div>
+
+    <div class="project-content">
+
+      <span class="project-tag">
+        UI/UX DESIGN
+      </span>
+
+      <h3>
+        MySehat Mobile App
+      </h3>
+
+      <p>
+        Desain aplikasi konsultasi kesehatan
+        modern berbasis mobile menggunakan Figma
+        dengan fokus pada clean UI dan user experience.
+      </p>
+
+      <div class="project-tech">
+
+        <span>Figma</span>
+        <span>Mobile UI</span>
+        <span>UX Design</span>
+
+      </div>
+
+      <div class="project-link">
+
+        View Project
+        <i class="fas fa-arrow-right"></i>
+
+      </div>
+
+    </div>
+
+  </a>
+
+  <!-- PROJECT 2 -->
+
+  <a
+    href="#"
+    class="project-card"
+  >
+
+    <div class="project-image">
+
+      <img
+        src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=1200&auto=format&fit=crop"
+        alt="Cashier App"
+      >
+
+    </div>
+
+    <div class="project-content">
+
+      <span class="project-tag">
+        WEB DEVELOPMENT
+      </span>
+
+      <h3>
+        Cashier Website
+      </h3>
+
+      <p>
+        Website kasir modern untuk membantu
+        pengelolaan transaksi, produk,
+        dan operasional bisnis secara digital.
+      </p>
+
+      <div class="project-tech">
+
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+
+      </div>
+
+      <div class="project-link">
+
+        View Project
+        <i class="fas fa-arrow-right"></i>
+
+      </div>
+
+    </div>
+
+  </a>
+
+</div>
+
+     
+
+      
+
+    </div>
+
+  </section>
+
+  <!-- ========================================
+       CONTACT
+  ========================================= -->
+
+  <section id="contact" class="reveal contact-section">
+
+    <div class="container">
+
+     <div class="contact-layout">
+
+  <!-- LEFT -->
+
+  <div class="contact-left">
+
+    <span class="section-label">
+      CONTACT
+    </span>
+
+    <h2>
+      Let’s build something
+      amazing together.
+    </h2>
+
+    <p>
+      Saya terbuka untuk diskusi,
+      kolaborasi, maupun peluang project
+      dan pengembangan web modern.
+    </p>
+
+  </div>
+
+  <!-- RIGHT -->
+
+  <div class="contact-right">
+
+    <!-- EMAIL -->
+
+    <a
+      href="mailto:ornandosaputra0@gmail.com"
+      class="contact-card"
+    >
+
+      <div class="contact-icon">
+        <i class="fas fa-envelope"></i>
+      </div>
+
+      <div>
+
+        <h3>Email</h3>
+
+        <span>
+          ornandosaputra0@gmail.com
+        </span>
+
+      </div>
+
+    </a>
+
+    <!-- WHATSAPP -->
+
+    <a
+      href="https://wa.me/628388541961"
+      target="_blank"
+      class="contact-card"
+    >
+
+      <div class="contact-icon">
+        <i class="fab fa-whatsapp"></i>
+      </div>
+
+      <div>
+
+        <h3>WhatsApp</h3>
+
+        <span>
+          Chat langsung
+        </span>
+
+      </div>
+
+    </a>
+
+    <!-- GITHUB -->
+
+    <a
+      href="https://github.com/ornandosaputra"
+      target="_blank"
+      class="contact-card"
+    >
+
+      <div class="contact-icon">
+        <i class="fab fa-github"></i>
+      </div>
+
+      <div>
+
+        <h3>GitHub</h3>
+
+        <span>
+          Explore my projects
+        </span>
+
+      </div>
+
+    </a>
+
+    <!-- INSTAGRAM -->
+
+    <a
+      href="https://instagram.com/ornandox_"
+      target="_blank"
+      class="contact-card"
+    >
+
+      <div class="contact-icon">
+        <i class="fab fa-instagram"></i>
+      </div>
+
+      <div>
+
+        <h3>Instagram</h3>
+
+        <span>
+          Connect with me
+        </span>
+
+      </div>
+
+    </a>
+
+  </div>
+
+</div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================
+       FOOTER
+  ========================================= -->
+
+  <footer>
+    <div class="footer-container">
+
+  <!-- TOP -->
+
+  <div class="footer-top">
+
+    <div class="footer-brand">
+
+      <h2>
+        Ornando<span>.</span>
+      </h2>
+
+      <p>
+        Building immersive digital experiences
+        with modern UI, clean architecture,
+        and cinematic interaction.
+      </p>
+
+    </div>
+
+    <!-- SOCIAL -->
+
+    <div class="footer-social">
+
+      <a
+        href="https://github.com/ornandosaputra"
+        target="_blank"
+      >
+        GitHub
+      </a>
+
+      <a
+        href="https://instagram.com/ornandox_"
+        target="_blank"
+      >
+        Instagram
+      </a>
+
+      <a
+        href="https://wa.me/628388541961"
+        target="_blank"
+      >
+        WhatsApp
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- LINE -->
+
+  <div class="footer-line"></div>
+
+  <!-- BOTTOM -->
+
+  <div class="footer-bottom">
+
+    <p>
+      © 2026 Ornando Portfolio.
+      All rights reserved.
+    </p>
+
+  </div>
+
+</div>
+  </footer>
+
+  <script>
+    
+const hero = document.querySelector('.hero');
+
+const aura = document.querySelector('.blackhole-aura');
+
+hero.addEventListener('mousemove',(e)=>{
+
+  const x = e.clientX / window.innerWidth - 0.5;
+  const y = e.clientY / window.innerHeight - 0.5;
+
+  aura.style.transform =
+    `translate(
+      calc(-50% + ${x * 30}px),
+      calc(-50% + ${y * 30}px)
+    )`;
+
+});
+    // Simple reveal animation
+
+    const cards = document.querySelectorAll(
+  '.skill-card, .project-card, .contact-card'
+);
+
+    const observer = new IntersectionObserver((entries)=>{
+
+      entries.forEach((entry)=>{
+
+        if(entry.isIntersecting){
+
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0px)';
+
+        }
+
+      });
+
+    });
+
+    cards.forEach((card)=>{
+
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(40px)';
+      card.style.transition = '0.7s ease';
+
+      observer.observe(card);
+
+    });
+
+    /* =========================================
+   SMOOTH SECTION REVEAL
+========================================= */
+
+const reveals = document.querySelectorAll('.reveal');
+
+const revealOnScroll = () => {
+
+  reveals.forEach((section) => {
+
+    const windowHeight = window.innerHeight;
+
+    const revealTop =
+      section.getBoundingClientRect().top;
+
+    const revealPoint = 120;
+
+    if(revealTop < windowHeight - revealPoint){
+
+      section.classList.add('active');
+
+    }
+
+  });
+
+};
+
+window.addEventListener(
+  'scroll',
+  revealOnScroll
+);
+
+/* FIRST LOAD */
+
+revealOnScroll();
+
+/* =========================================
+   ACTIVE ORBIT NAVIGATION
+========================================= */
+
+const sections =
+  document.querySelectorAll('section');
+
+const navLinks =
+  document.querySelectorAll('.hero-nav a');
+
+window.addEventListener('scroll', () => {
+
+  let current = '';
+
+  sections.forEach((section) => {
+
+    const sectionTop =
+      section.offsetTop;
+
+    const sectionHeight =
+      section.clientHeight;
+
+    if(
+      scrollY >=
+      sectionTop - 200
+    ){
+
+      current =
+        section.getAttribute('id');
+    }
+
+  });
+
+  navLinks.forEach((link) => {
+
+    link.classList.remove('active-nav');
+
+    if(
+      link.dataset.section === current
+    ){
+
+      link.classList.add('active-nav');
+    }
+
+  });
+
+});
+
+/* =========================================
+   LOADING SCREEN
+========================================= */
+
+window.addEventListener('load', () => {
+
+  const loader =
+    document.querySelector('.loader');
+
+  setTimeout(() => {
+
+    loader.classList.add('hidden');
+
+  }, 1800);
+
+});
+
+  </script>
+
+</body>
+</html>
